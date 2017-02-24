@@ -1,3 +1,7 @@
+Project Name: Sales Analysis for Staten Island
+Created By  : Thangam Sankar, Preeti Swaminathan, Ekaterina Pirogova
+Created Date: 2/24/2017
+
 The purpose of this project is to process sales file for Staten Island. It does the following:
 
 1. Clean up of sales file to keep only actual sales
