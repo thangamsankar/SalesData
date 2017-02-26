@@ -16,4 +16,17 @@ The project is organized into the following directories:
 - Analysis directory: contains files for exploratory data analysis
 - Paper directory   : contains files with explanations on the data patterns 
 
+Following is the sessionInfo when the project was created:
+R version 3.3.2 (2016-10-31)
+Platform: i386-w64-mingw32/i386 (32-bit)
+Running under: Windows 7 x64 (build 7601) Service Pack 1
 
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base 
