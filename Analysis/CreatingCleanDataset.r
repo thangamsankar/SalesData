@@ -1,5 +1,5 @@
 #read file with raw data
-bk <- read.csv("rollingsales_statenisland.csv",skip=4,header=TRUE)
+bk <- read.csv("/Data/rollingsales_statenisland.csv",skip=4,header=TRUE)
 
 ## Check the data
 head(bk)
