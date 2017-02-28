@@ -1,5 +1,5 @@
 library(ggplot2)
-dataset <- read.csv("CleanedSalesData.csv",header=TRUE)
+dataset <- read.csv("/Data/CleanedSalesData.csv",header=TRUE)
 summary(dataset)
 
 #plot sqft against price
