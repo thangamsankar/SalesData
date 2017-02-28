@@ -63,4 +63,4 @@ outlierKD(cs,cs.pricePERsqft)
 cleanset=subset(cs,!is.na(cs$cs.pricePERsqft))
 
 #create csv with clean data
-write.csv(cleanset,file='CleanedSalesData.csv')
+write.csv(cleanset,file='/Data/CleanedSalesData.csv')
