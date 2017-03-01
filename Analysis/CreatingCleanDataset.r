@@ -57,7 +57,7 @@ outlierKD <- function(dt, var) {
 #if it's a real or just a some kind of a mistake, but due to this impossible and data looks rather
 #better without outliers, we remove outliers. The best sign of weird signs I think is the ratio price/sqft
 #so we will remove outliers that behave weird there.
-
+cs$cs.pricePERsqft=cs$sale.price.n/cs$gross.sqft
 #apply this function until we get 0% proportion. This way will get meaningful dataset.
 outlierKD(cs,cs.pricePERsqft)
 cleanset=subset(cs,!is.na(cs$cs.pricePERsqft))
