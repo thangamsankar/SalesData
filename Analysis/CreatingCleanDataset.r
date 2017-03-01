@@ -1,5 +1,5 @@
 #read file with raw data
-bk <- read.csv("rollingsales_statenisland.csv",skip=4,header=TRUE)
+bk <- read.csv("Data/rollingsales_statenisland.csv",skip=4,header=TRUE)
 
 ## Check the data
 head(bk)
@@ -63,4 +63,4 @@ outlierKD(cs,cs.pricePERsqft)
 cleanset=subset(cs,!is.na(cs$cs.pricePERsqft))
 
 #create csv with clean data
-write.csv(cleanset,file='CleanedSalesData.csv')
+write.csv(cleanset,file='Data/CleanedSalesData.csv')
