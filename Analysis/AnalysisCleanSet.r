@@ -1,28 +1,32 @@
 library(ggplot2)
 library(sm)
+library(scales)
 #upload clean dataset
-dataset <- read.csv("Data/CleanedSalesData.csv",header=TRUE)
+dataset <- read.csv("CleanedSalesData.csv",header=TRUE)
 summary(dataset)
 
 #plot sale price vs sqft
+
 ggplot(dataset) + geom_point(data=dataset,aes(x=sale.price.n,
-              y=gross.sqft), fill="DarkRed", shape=21)
+                                              y=gross.sqft), fill="DarkRed", shape=21)+scale_x_continuous(labels = comma)+scale_y_continuous(labels=comma)
+
 
 #correlation coefficient
 cor(dataset$gross.sqft,dataset$sale.price.n)
 #reduced dataset. To see data claster closer
 newset=subset(dataset,dataset$sale.price.n<1400000)
 ggplot(dataset) + geom_point(data=newset,aes(x=sale.price.n,
-                                         y=gross.sqft), fill="DarkRed", shape=21)
+                                             y=gross.sqft), fill="DarkRed", shape=21)+scale_x_continuous(labels = comma)+scale_y_continuous(labels = comma)
 #correlation coeficcient realy sensitive to outliers
 cor(newset$gross.sqft,newset$sale.price.n)
 #boxplots
+options(scipen=10000)
 boxplot(dataset$gross.sqft,outline=FALSE,col="DarkRed", names="SQFT")
 boxplot(dataset$sale.price.n,outline=FALSE,col="DarkRed",names="Sale price")
 
 #qqplot of price to sqft
 qqplot(x=dataset$sale.price.n,y=dataset$gross.sqft,col=rainbow(20))
-qqplot(x=dataset$gross.sqft,y=dataset$gross.sqft,col=rainbow(20))
+
 #normal qqplot for ratio price to sqft
 qqnorm(dataset$cs.pricePERsqft,col="Orange")
 qqline(dataset$cs.pricePERsqft,col="Blue")
