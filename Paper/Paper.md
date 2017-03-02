@@ -10,6 +10,7 @@ March 1, 2017
 #####5.There is moderate positive correlation between sales price and gross square footage as indicated by correlation coefficient. Which is expected as different building types were used for analysis.
 #####6.The ratio of price to square footage is normally distributed as it's seen on a normal qq-plot.
 #####7.Most of the sale prices is before 1 million and most of the gross square footage is less than 5000 sqft.
+#####8. We specifically looked at 1,2,3 family homes. They shows correlation between sale price and square footage
 
 
 ```r
@@ -219,3 +220,99 @@ lines(xfit, yfit, col="lightslateblue", lwd=2)
 
 ![](Paper_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
+
+```r
+#Cpecifically looking at 1-, 2-, and 3-family homes
+dataset.homes <- dataset[which(grepl("FAMILY",dataset$building.class.category)),]
+dim(dataset.homes)
+```
+
+```
+## [1] 4395   23
+```
+
+```r
+#Plot with log transformation base 10. Which produces normaly distributed data
+plot(log10(dataset.homes$gross.sqft),log10(dataset.homes$sale.price.n))
+```
+
+![](Paper_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+
+```r
+#Summary of houses with sale price less than 122000
+summary(dataset.homes[which(dataset.homes$sale.price.n<1000000),])
+```
+
+```
+##        X           borough             neighborhood 
+##  Min.   :   6   Min.   :5    GREAT KILLS     : 447  
+##  1st Qu.:2064   1st Qu.:5    ELTINGVILLE     : 194  
+##  Median :4080   Median :5    ARDEN HEIGHTS   : 193  
+##  Mean   :4120   Mean   :5    MIDLAND BEACH   : 189  
+##  3rd Qu.:6318   3rd Qu.:5    BULLS HEAD      : 181  
+##  Max.   :8209   Max.   :5    NEW SPRINGVILLE : 175  
+##                             (Other)          :2941  
+##                                   building.class.category
+##   01 ONE FAMILY DWELLINGS                     :3087      
+##   02 TWO FAMILY DWELLINGS                     :1188      
+##   03 THREE FAMILY DWELLINGS                   :  45      
+##   05 TAX CLASS 1 VACANT LAND                  :   0      
+##   06 TAX CLASS 1 - OTHER                      :   0      
+##   07 RENTALS - WALKUP APARTMENTS              :   0      
+##  (Other)                                      :   0      
+##  tax.class.at.present     block           lot         ease.ment     
+##   1  :4320            Min.   :  17   Min.   :  1.00   Mode:logical  
+##   2  :   0            1st Qu.:1188   1st Qu.: 23.00   NA's:4320     
+##   2A :   0            Median :3364   Median : 50.00                 
+##   2B :   0            Mean   :3486   Mean   : 79.91                 
+##   4  :   0            3rd Qu.:5486   3rd Qu.:100.00                 
+##                       Max.   :8050   Max.   :797.00                 
+##                                                                     
+##  building.class.at.present                   address     apartment.number
+##   A5    :1325               21 GREAVES COURT     :   3   Min.   :10      
+##   A1    : 901               10 JOSEPH COURT      :   2   1st Qu.:31      
+##   B2    : 747               1045 SHELDON AVENUE  :   2   Median :52      
+##   A2    : 513               106 BLACKFORD AVENUE :   2   Mean   :52      
+##   B9    : 256               11 CURTIS COURT      :   2   3rd Qu.:73      
+##   A9    : 210               118 ST MARYS AVENUE  :   2   Max.   :94      
+##  (Other): 368              (Other)               :4307   NA's   :4318    
+##     zip.code     residential.units commercial.units   total.units   
+##  Min.   :    0   Min.   :1.000     Min.   :0.00000   Min.   :1.000  
+##  1st Qu.:10305   1st Qu.:1.000     1st Qu.:0.00000   1st Qu.:1.000  
+##  Median :10308   Median :1.000     Median :0.00000   Median :1.000  
+##  Mean   :10287   Mean   :1.296     Mean   :0.01157   Mean   :1.306  
+##  3rd Qu.:10312   3rd Qu.:2.000     3rd Qu.:0.00000   3rd Qu.:2.000  
+##  Max.   :10314   Max.   :3.000     Max.   :2.00000   Max.   :3.000  
+##                                                                     
+##  tax.class.at.time.of.sale building.class.at.time.of.sale   sale.date    
+##  Min.   :1                  A5    :1340                   Min.   :42401  
+##  1st Qu.:1                  A1    : 899                   1st Qu.:42500  
+##  Median :1                  B2    : 746                   Median :42584  
+##  Mean   :1                  A2    : 511                   Mean   :42579  
+##  3rd Qu.:1                  B9    : 257                   3rd Qu.:42661  
+##  Max.   :1                  A9    : 198                   Max.   :42759  
+##                            (Other): 369                                  
+##   sale.price.n      gross.sqft     land.sqft      years.built  
+##  Min.   : 37100   Min.   : 382   Min.   :  315   Min.   :1865  
+##  1st Qu.:355000   1st Qu.:1232   1st Qu.: 2346   1st Qu.:1945  
+##  Median :455000   Median :1564   Median : 3298   Median :1975  
+##  Mean   :470586   Mean   :1703   Mean   : 3741   Mean   :1968  
+##  3rd Qu.:570000   3rd Qu.:2064   3rd Qu.: 4500   3rd Qu.:1996  
+##  Max.   :999999   Max.   :5840   Max.   :44922   Max.   :2016  
+##                                                                
+##  cs.pricePERsqft 
+##  Min.   : 48.72  
+##  1st Qu.:228.49  
+##  Median :287.06  
+##  Mean   :289.47  
+##  3rd Qu.:346.82  
+##  Max.   :527.50  
+## 
+```
+
+```r
+#Plot without log transformation which shows right scewed data for both variables
+plot(dataset.homes$gross.sqft,dataset.homes$sale.price.n)
+```
+
+![](Paper_files/figure-html/unnamed-chunk-14-2.png)<!-- -->
