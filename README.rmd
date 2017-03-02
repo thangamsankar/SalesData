@@ -2,7 +2,9 @@
 output: 
   html_document: 
     highlight: pygments
+    keep_md: yes
     theme: readable
+    toc: yes
 ---
 Project Name: Sales Analysis for Staten Island
 
