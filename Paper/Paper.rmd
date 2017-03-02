@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Sales Data for Staten Island
 Thangam, Preeti, Ekaterina  
 March 1, 2017  
