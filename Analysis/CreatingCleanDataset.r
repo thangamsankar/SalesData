@@ -59,6 +59,7 @@ outlierKD <- function(dt, var) {
 #so we will remove outliers that behave weird there.
 
 #apply this function until we get 0% proportion. This way will get meaningful dataset.
+cs$cs.pricePERsqft=cs$sale.price.n/cs$gross.sqft
 outlierKD(cs,cs.pricePERsqft)
 cleanset=subset(cs,!is.na(cs$cs.pricePERsqft))
 

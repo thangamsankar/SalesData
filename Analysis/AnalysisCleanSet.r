@@ -2,7 +2,7 @@ library(ggplot2)
 library(sm)
 library(scales)
 #upload clean dataset
-dataset <- read.csv("CleanedSalesData.csv",header=TRUE)
+dataset <- read.csv("Data/CleanedSalesData.csv",header=TRUE)
 summary(dataset)
 
 #plot sale price vs sqft
