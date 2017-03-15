@@ -1,0 +1,124 @@
+---
+title: "Case Study 1"
+author: "Thangam Sankar"
+date: "March 11, 2017"
+output: html_document
+---
+# I. Introduction
+## The following is an analysis of the GDP of 190 countries and the impact of income groups on GDP. It uses data sources from WorldBank downloaded from the following links:
+* HTTP Links:
+
+    + http://data.worldbank.org/data-catalog/GDP-ranking-table
+    + http://data.worldbank.org/data-catalog/ed-stats
+
+## It merges the data from the 2 sources and here are the metrics reported:
+* Metrics:
+    1. Average GDP rankings for the "High income: OECD" and "High income:nonOECD" groups
+    2. Distribution of GDP value by income group
+    3. Summary statistics of GDP value by income groups
+    4. Count of countries in each income groups grouped according to GDP Ranking quantiles
+<br>
+
+#II. Analysis
+```{r echo=FALSE}
+library(repmis, warn.conflicts = FALSE, quietly = TRUE)
+library(RCurl, warn.conflicts = FALSE, quietly = TRUE)
+library(stringr, warn.conflicts = FALSE, quietly = TRUE)
+library(plyr, warn.conflicts = FALSE, quietly = TRUE)
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
+library(reshape2, warn.conflicts = FALSE, quietly = TRUE)
+```
+<br>
+**1. Import data...**   
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("C:\\Users\\tsankar\\Documents\\Datascience\\Assignments\\Case Study 1\\Data Import.R", local = TRUE, echo = FALSE)
+```
+<br>
+**2. Performing Data cleanup...**  
+```{r echo=FALSE}
+source("C:\\Users\\tsankar\\Documents\\Datascience\\Assignments\\Case Study 1\\Data Cleanup.R", local = TRUE, echo = FALSE)
+```
++ **Printing NA Values**  
+```{r echo = TRUE}
+print(GDP_NA_Country)
+print(GDP_NA_Ranking)
+print(GDP_NA_Amount)
+print(GDP_NA_Count)
+print(EDU_NA_Country)
+print(EDU_NA_Income)
+print(EDU_NA_Count)
+```
+  
+     
++ **Count of GDP Data after cleanup**  
+```{r echo = TRUE}
+nrow(GDP_data)
+```
+<br>
+**3. Analysis of data**
+
+* Analysis Steps:
+
+      1. After merging the two data by country short code, how many IDs matched?
+      2. What is the 13th country after ordering the countries in descending order?
+      3. What are the average GDP rankings for "High income: OECD" and "High income:nonOECD"?  
+<br>
+```{r echo=FALSE}
+source("C:\\Users\\tsankar\\Documents\\Datascience\\Assignments\\Case Study 1\\Data Analysis.R", local = TRUE, echo = FALSE)
+```
+
+
++ **Number of matching Country Codes**
+```{r echo= TRUE}
+sum(is.na(Merge_GDP_EDU))
+```
+<br>
+
++ **13th country. There is a tie between Grenada and St. Kitts and Nevis. So print both.**
+```{r echo= TRUE}
+print(Merge_GDP_EDU_Sort$CountryName[Merge_GDP_EDU_Sort$rank > 11 & Merge_GDP_EDU_Sort$rank < 13])
+```
+<br>
+
++ **Average GDP rankings for "High income: OECD" and "High income:nonOECD"**
+```{r echo=TRUE}
+print(Avg_Rank_OECD)
+print(Avg_Rank_nonOECD)
+```
+
+<br>
+
+**4. Generating reports...**
+
++ **Distribution of GDP for all countries by Income Group**     
+```{r echo=FALSE}
+ggplot(Merge_GDP_EDU_Sort, aes(y=GDP_Amount, x = Income.Group)) + scale_y_log10()+ geom_point(pch = 21, size = 6, fill = I("chocolate4"))
+```
+<br>
+
++ **Summary statistics of GDP by Income Groups**
+
+```{r echo=FALSE}  
+tapply(Merge_GDP_EDU_Sort$GDP_Amount, Merge_GDP_EDU_Sort$Income.Group, summary)
+brk <- quantile(Merge_GDP_EDU_Sort$Ranking, seq(0, 1, 0.2))
+Merge_GDP_EDU_Quantile <- cut(Merge_GDP_EDU_Sort$Ranking, breaks = brk)
+GDP_EDU_table <- table(Merge_GDP_EDU_Sort$Income.Group, Merge_GDP_EDU_Quantile)
+colnames(GDP_EDU_table) <- c("Quantile1", "Quantile2", "Quantile3", "Quantile4", "Quantile5")
+```
+<br>
+
++ **Number of countries in Lower middle income but among the 38 nations with highest GDP** 
+```{r echo=TRUE}
+print(GDP_EDU_table[4])
+```
+<br>
+
+#III. Conclusion:
+##The following conclusions could be drawn:
++ As seen in the response to Question 3 under analysis, the average GDP ranking for "High income: OECD" is less than the average GDP ranking for "High income: nonOECD" groups
++ The plot in reports shows that the GDP for the lower middle income countries is highly varied extends from low to high GDPs, whereas the GDP for the high income OECD and nonOECD groups is very close to all groups.
++ There are some countries(5) which despite being in the Lower middle income group are among the nations with highest GDP
++ The data are all observational data with no causal interpretation
